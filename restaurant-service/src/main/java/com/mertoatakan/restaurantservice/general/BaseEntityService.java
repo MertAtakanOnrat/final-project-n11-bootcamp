@@ -1,6 +1,6 @@
 package com.mertoatakan.restaurantservice.general;
 
-import com.mertoatakan.userservice.exceptions.ItemNotFoundException;
+import com.mertoatakan.restaurantservice.exceptions.ItemNotFoundException;
 import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
