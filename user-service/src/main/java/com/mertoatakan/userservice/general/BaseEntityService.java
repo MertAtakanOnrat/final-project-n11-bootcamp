@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -31,6 +32,10 @@ public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepos
 
         entity = repository.save(entity);
         return entity;
+    }
+
+    public List<E> findAll() {
+        return repository.findAll();
     }
 
     public Optional<E> findById(Long id){
