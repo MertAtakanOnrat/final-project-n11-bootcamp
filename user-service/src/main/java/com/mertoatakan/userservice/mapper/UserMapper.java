@@ -14,7 +14,7 @@ import java.util.List;
 public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
     @Mapping(source = "password", target = "password")
-    @Mapping(target = "userStatus", constant = "PASSIVE")
+    @Mapping(target = "userStatus", constant = "ACTIVE")
     User convertToUser(UserSaveRequest request);
 
     UserDTO convertToUserDTO(User user);

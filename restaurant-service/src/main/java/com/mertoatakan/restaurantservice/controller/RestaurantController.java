@@ -1,23 +1,37 @@
 package com.mertoatakan.restaurantservice.controller;
 
-import com.mertoatakan.restaurantservice.entity.Restaurant;
-import com.mertoatakan.restaurantservice.repository.RestaurantRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mertoatakan.restaurantservice.dto.RestaurantDTO;
+import com.mertoatakan.restaurantservice.general.RestResponse;
+import com.mertoatakan.restaurantservice.request.RestaurantSaveRequest;
+import com.mertoatakan.restaurantservice.service.impl.RestaurantServiceImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/restaurants")
 public class RestaurantController {
 
-    private final RestaurantRepository restaurantRepository;
+    private final RestaurantServiceImpl restaurantService;
 
-    public RestaurantController(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
+    public RestaurantController(RestaurantServiceImpl restaurantService) {
+        this.restaurantService = restaurantService;
     }
 
+
     @GetMapping
-    public Iterable<Restaurant> getAllRestaurants(){
-        return restaurantRepository.findAll();
+    public ResponseEntity<RestResponse<Iterable<RestaurantDTO>>> getAllRestaurants(){
+        return ResponseEntity.ok(RestResponse.of(restaurantService.getAllRestaurants()));
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<RestResponse<RestaurantDTO>> getRestaurantById(@PathVariable String id){
+        RestaurantDTO restaurantDTO = restaurantService.getRestaurantById(id);
+        return ResponseEntity.ok(RestResponse.of(restaurantDTO));
+    }
+
+    @PostMapping
+    public ResponseEntity<RestResponse<RestaurantDTO>> saveRestaurant(@RequestBody RestaurantSaveRequest request){
+        RestaurantDTO restaurantDTO = restaurantService.saveRestaurant(request);
+        return ResponseEntity.ok(RestResponse.of(restaurantDTO));
     }
 }

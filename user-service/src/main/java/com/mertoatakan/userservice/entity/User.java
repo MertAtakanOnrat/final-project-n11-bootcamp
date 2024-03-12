@@ -33,8 +33,7 @@ public class User extends BaseEntity {
     private String surname;
 
     @Column(name = "EMAIL", nullable = false)
-    @NotNull(message = "Email cannot be null")
-    @Size(min = 5, max = 255, message = "Email must be between 5 and 255 characters")
+    @NotBlank(message = "Email cannot be blank.")
     @Email(message = "Email should be valid")
     private String email;
 
@@ -45,14 +44,14 @@ public class User extends BaseEntity {
 
     @Column(name = "LATITUDE", nullable = false)
     @NotNull
-    @DecimalMin(value = "-90.0", inclusive = true)
-    @DecimalMax(value = "90.0", inclusive = true)
+    @DecimalMin(value = "-90.0", inclusive = true, message = "The value should be greater than -90.0")
+    @DecimalMax(value = "90.0", inclusive = true, message = "The value should be smaller than 90.0")
     private Double latitude;
 
     @Column(name = "LONGITUDE", nullable = false)
     @NotNull
-    @DecimalMin(value = "-180.0", inclusive = true)
-    @DecimalMax(value = "180.0", inclusive = true)
+    @DecimalMin(value = "-180.0", inclusive = true, message = "The value should be greater than -180.0")
+    @DecimalMax(value = "180.0", inclusive = true, message = "The value should be smaller than 180.0")
     private Double longitude;
 
     @Column(name = "PASSWORD", nullable = false)

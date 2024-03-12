@@ -11,6 +11,7 @@ import org.springframework.data.solr.repository.config.EnableSolrRepositories;
 
 @Configuration
 @EnableSolrRepositories(basePackages = "com.mertoatakan.restaurantservice"
+        , namedQueriesLocation = "classpath:solr-named-queries.properties"
         //, namedQueriesLocation = ""
         )
 @ComponentScan

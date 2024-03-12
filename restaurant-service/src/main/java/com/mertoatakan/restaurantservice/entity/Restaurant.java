@@ -1,5 +1,6 @@
 package com.mertoatakan.restaurantservice.entity;
 
+import com.mertoatakan.restaurantservice.general.BaseEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
@@ -10,10 +11,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @SolrDocument(solrCoreName = "restaurant_service_restaurants")
-public class Restaurant {
+public class Restaurant extends BaseEntity {
 
     @Id
     @Indexed(name = "id", type = "string")
+    @NotBlank
     private String id;
 
     @NotBlank
