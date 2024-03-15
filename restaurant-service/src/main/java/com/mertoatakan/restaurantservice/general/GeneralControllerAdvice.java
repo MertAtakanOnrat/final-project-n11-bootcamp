@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RestController
@@ -31,6 +33,41 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
 
     private final KafkaProducerService kafkaProducerService;
 
+    private static String errorLog = "errorLog";
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+        String originalMessage = ex.getMostSpecificCause().getMessage();
+        String importantPartOfMessage = extractImportantPartOfMessage(originalMessage);
+
+        String conciseError = "Invalid request body: " + importantPartOfMessage;
+
+        GeneralErrorMessages generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), conciseError, request.getDescription(false));
+        RestResponse<GeneralErrorMessages> restResponse = RestResponse.error(generalErrorMessages);
+
+        kafkaProducerService.sendMessage("errorLog", conciseError);
+
+        return new ResponseEntity<>(restResponse, headers, HttpStatus.BAD_REQUEST);
+    }
+
+    private String extractImportantPartOfMessage(String errorMessage) {
+
+        int endIndex = errorMessage.indexOf("Enum class") + "Enum class".length();
+        if (endIndex != -1 && errorMessage.length() > endIndex) {
+            String importantPart = errorMessage.substring(0, endIndex);
+
+            int startEnumValuesIndex = errorMessage.indexOf("[", endIndex);
+            int endEnumValuesIndex = errorMessage.indexOf("]", startEnumValuesIndex) + 1;
+            if (startEnumValuesIndex != -1 && endEnumValuesIndex != -1) {
+                importantPart += errorMessage.substring(startEnumValuesIndex, Math.min(endEnumValuesIndex + 1, errorMessage.length()));
+            }
+            return importantPart.length() > 255 ? importantPart.substring(0, 252) + "..." : importantPart;
+        }
+
+        return errorMessage.length() > 255 ? errorMessage.substring(0, 252) + "..." : errorMessage;
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<Map<String, String>> errorList = ex.getBindingResult().getFieldErrors().stream()
@@ -38,15 +75,24 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
                     Map<String, String> errorMap = new HashMap<>();
                     errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
                     return errorMap;
-                }).toList();
+                }).collect(Collectors.toList());
 
         String description = request.getDescription(false);
-        var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), errorList.toString(), description);
+        String formattedErrorList = formatErrorList(errorList);
+        var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), formattedErrorList, description);
         var restResponse = RestResponse.error(generalErrorMessages);
 
         kafkaProducerService.sendMessage("errorLog", generalErrorMessages.message());
 
         return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    private String formatErrorList(List<Map<String, String>> errorList) {
+        return errorList.stream()
+                .map(errorMap -> errorMap.entrySet().stream()
+                        .map(entry -> entry.getKey() + ": " + entry.getValue())
+                        .collect(Collectors.joining(", ")))
+                .collect(Collectors.joining("; "));
     }
 
     @ExceptionHandler
@@ -59,7 +105,7 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
         var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
         RestResponse<GeneralErrorMessages> restResponse = RestResponse.error(generalErrorMessages);
 
-        kafkaProducerService.sendMessage("errorLog", message);
+        kafkaProducerService.sendMessage(errorLog, message);
 
         return new ResponseEntity<>(restResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
@@ -91,14 +137,14 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public final ResponseEntity<Object> handleRestaurantNotFoundExceptions(RestaurantNotFoundException e, WebRequest request){
 
-        String message = e.getMessage();
+        String message = e.getBaseErrorMessage().getMessage();
 
         String description = request.getDescription(false);
 
         var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
         RestResponse<GeneralErrorMessages> restResponse = RestResponse.error(generalErrorMessages);
 
-        kafkaProducerService.sendMessage("errorLog", message);
+        kafkaProducerService.sendMessage(errorLog, message);
 
         return new ResponseEntity<>(restResponse, HttpStatus.NOT_FOUND);
 
@@ -107,14 +153,14 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public final ResponseEntity<Object> handleRestaurantIdAlreadyExistsExceptions(RestaurantIdAlreadyExistsException e, WebRequest request){
 
-        String message = e.getMessage();
+        String message = e.getBaseErrorMessage().getMessage();
 
         String description = request.getDescription(false);
 
         var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
         RestResponse<GeneralErrorMessages> restResponse = RestResponse.error(generalErrorMessages);
 
-        kafkaProducerService.sendMessage("errorLog", message);
+        kafkaProducerService.sendMessage(errorLog, message);
 
         return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
 
@@ -123,14 +169,14 @@ public class GeneralControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public final ResponseEntity<Object> handleRestaurantSaveFailedExceptions(RestaurantSaveFailedException e, WebRequest request){
 
-        String message = e.getMessage();
+        String message = e.getBaseErrorMessage().getMessage();
 
         String description = request.getDescription(false);
 
         var generalErrorMessages = new GeneralErrorMessages(LocalDateTime.now(), message, description);
         RestResponse<GeneralErrorMessages> restResponse = RestResponse.error(generalErrorMessages);
 
-        kafkaProducerService.sendMessage("errorLog", message);
+        kafkaProducerService.sendMessage(errorLog, message);
 
         return new ResponseEntity<>(restResponse, HttpStatus.BAD_REQUEST);
 

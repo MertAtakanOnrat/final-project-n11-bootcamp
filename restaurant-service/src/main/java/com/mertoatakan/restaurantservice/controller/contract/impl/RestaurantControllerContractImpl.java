@@ -1,5 +1,6 @@
-package com.mertoatakan.restaurantservice.service.impl;
+package com.mertoatakan.restaurantservice.controller.contract.impl;
 
+import com.mertoatakan.restaurantservice.controller.contract.RestaurantControllerContract;
 import com.mertoatakan.restaurantservice.dto.RestaurantDTO;
 import com.mertoatakan.restaurantservice.entity.Restaurant;
 import com.mertoatakan.restaurantservice.mapper.RestaurantMapper;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RestaurantServiceImpl implements com.mertoatakan.restaurantservice.service.RestaurantService {
+public class RestaurantControllerContractImpl implements RestaurantControllerContract {
 
     private final RestaurantEntityService restaurantEntityService;
 

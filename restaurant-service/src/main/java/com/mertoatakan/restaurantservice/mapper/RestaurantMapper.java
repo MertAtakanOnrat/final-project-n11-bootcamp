@@ -4,6 +4,7 @@ import com.mertoatakan.restaurantservice.dto.RestaurantDTO;
 import com.mertoatakan.restaurantservice.entity.Restaurant;
 import com.mertoatakan.restaurantservice.request.RestaurantSaveRequest;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -12,6 +13,7 @@ import org.mapstruct.factory.Mappers;
 public interface RestaurantMapper {
     RestaurantMapper INSTANCE = Mappers.getMapper(RestaurantMapper.class);
 
+    @Mapping(target = "averageRate", ignore = true)
     Restaurant convertToRestaurant(RestaurantSaveRequest request);
 
     RestaurantDTO convertToRestaurantDTO(Restaurant customer);
