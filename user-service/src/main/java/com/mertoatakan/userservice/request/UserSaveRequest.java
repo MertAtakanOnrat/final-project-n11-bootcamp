@@ -13,7 +13,6 @@ public record UserSaveRequest(
                               @NotBlank String email,
                               //@NotBlank @Pattern(regexp = "^\\+90\\d{10}$", message = "Invalid phone number") String phoneNumber,
                               @NotBlank String phoneNumber,
-
                               @NotNull Double latitude,
                               @NotNull Double longitude,
                               @NotBlank String password,
