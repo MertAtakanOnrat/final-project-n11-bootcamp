@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record UserReviewDTO(Long id,
                             Long userId,
-                            Long restaurantId,
+                            String restaurantId,
                             String comment,
                             Rate rate,
                             LocalDateTime reviewDate) {

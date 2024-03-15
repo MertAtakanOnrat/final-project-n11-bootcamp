@@ -26,15 +26,14 @@ public class UserReview extends BaseEntity {
     private Long id;
 
     @Column(name = "USER_ID", nullable = false)
-    @NotNull
+    @NotNull(message = "User id must not be null!")
     private Long userId;
 
     @Column(name = "RESTAURANT_ID", nullable = false)
-    @NotBlank
+    @NotBlank(message = "Restaurant id must not be blank!")
     private String restaurantId;
 
     @Column(name = "COMMENT", nullable = false)
-    @NotBlank
     private String comment;
 
     @Enumerated(EnumType.STRING)
