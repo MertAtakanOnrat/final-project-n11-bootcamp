@@ -65,7 +65,7 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS", nullable = false)
-    @NotNull
+    @NotNull(message = "Status should not be null!")
     private UserStatus userStatus;
 
 }

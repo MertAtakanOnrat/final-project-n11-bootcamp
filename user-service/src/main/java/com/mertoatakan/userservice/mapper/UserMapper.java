@@ -3,8 +3,10 @@ package com.mertoatakan.userservice.mapper;
 import com.mertoatakan.userservice.dto.UserDTO;
 import com.mertoatakan.userservice.entity.User;
 import com.mertoatakan.userservice.request.UserSaveRequest;
+import com.mertoatakan.userservice.request.UserUpdateRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
@@ -20,5 +22,9 @@ public interface UserMapper {
     UserDTO convertToUserDTO(User user);
 
     List<UserDTO> convertToUserDTOs(List<User> users);
+
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "userStatus", ignore = true)
+    User updateUser(UserUpdateRequest request, @MappingTarget User user);
 
 }
