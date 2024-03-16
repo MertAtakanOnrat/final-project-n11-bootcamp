@@ -53,6 +53,11 @@ public class RestaurantControllerContractImpl implements RestaurantControllerCon
         return averageRateForRestaurant;
     }
 
+    @Override
+    public void deleteRestaurant(String id) {
+        restaurantEntityService.delete(id);
+    }
+
     public Double calculateAverageRateForRestaurant(String restaurantId) {
         ResponseEntity<RestResponse<List<UserReviewDTO>>> responseEntity = userReviewClient.getAllUserReviewsByRestaurantId(restaurantId);
         List<UserReviewDTO> reviews = responseEntity.getBody().getData();

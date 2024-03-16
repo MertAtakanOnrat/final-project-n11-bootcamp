@@ -8,5 +8,6 @@ public interface RestaurantControllerContract {
     RestaurantDTO getRestaurantById(String id);
     RestaurantDTO saveRestaurant(RestaurantSaveRequest request);
     Double getAverageRate(String id);
+    void deleteRestaurant(String id);
 
 }

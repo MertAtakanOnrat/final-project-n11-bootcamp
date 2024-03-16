@@ -47,4 +47,9 @@ public class RestaurantController {
         RestaurantDTO restaurantDTO = restaurantControllerContract.saveRestaurant(request);
         return ResponseEntity.ok(RestResponse.of(restaurantDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteRestaurant(@PathVariable String id){
+        restaurantControllerContract.deleteRestaurant(id);
+    }
 }
