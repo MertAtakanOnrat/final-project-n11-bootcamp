@@ -72,4 +72,10 @@ public class UserController {
         UserDTO userDTO = userControllerContract.saveUser(request);
         return ResponseEntity.ok(RestResponse.of(userDTO));
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id){
+        userControllerContract.deleteUserById(id);
+
+    }
 }
