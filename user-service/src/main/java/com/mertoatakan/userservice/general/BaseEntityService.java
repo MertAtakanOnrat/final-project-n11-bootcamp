@@ -54,6 +54,14 @@ public abstract class BaseEntityService<E extends BaseEntity, R extends JpaRepos
         return entity;
     }
 
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public void delete(E entity){
+        repository.delete(entity);
+    }
+
     public boolean existById(Long id){
         return repository.existsById(id);
     }

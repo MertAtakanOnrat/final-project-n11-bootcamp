@@ -6,3 +6,6 @@ restaurant veriler db de değil solr da tutuluyor!
 
 average rate hesabı için restaurant tarafından user_reviewlere erişebilmek lazım
 bu şekilde ortalama alıp hesaplanmalı.
+
+yeni bir user-review eklenince silinice ve güncellenince asenkron bir 
+şekilde average hesaplanmalı
