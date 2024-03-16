@@ -11,6 +11,8 @@ import com.mertoatakan.userservice.exceptions.RestaurantNotFoundException;
 import com.mertoatakan.userservice.exceptions.UserNotFoundException;
 import com.mertoatakan.userservice.mapper.UserReviewMapper;
 import com.mertoatakan.userservice.request.UserReviewSaveRequest;
+import com.mertoatakan.userservice.request.UserReviewUpdateRequest;
+import com.mertoatakan.userservice.service.RestaurantService;
 import com.mertoatakan.userservice.service.entityService.UserEntityService;
 import com.mertoatakan.userservice.service.entityService.UserReviewEntityService;
 import feign.FeignException;
@@ -27,20 +29,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
     private final UserReviewEntityService userReviewEntityService;
     private final UserEntityService userEntityService;
     private final RestaurantClient restaurantClient;
-
-    @Override
-    public UserReviewDTO saveUserReview(UserReviewSaveRequest request) {
-
-        checkUserExists(request.userId());
-        checkRestaurantExists(request.restaurantId());
-
-        Rate rate = Rate.fromValue(request.rate());
-        UserReview userReview = UserReviewMapper.INSTANCE.convertToUserReview(request);
-        userReview.setRate(rate);
-        userReview.setReviewDate(LocalDateTime.now());
-        userReview = userReviewEntityService.save(userReview);
-        return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
-    }
+    private final RestaurantService restaurantService;
 
     @Override
     public List<UserReviewDTO> getAllUserReviews() {
@@ -70,6 +59,46 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
         return UserReviewMapper.INSTANCE.convertToUserReviewDTOs(userReviews);
     }
 
+    @Override
+    public UserReviewDTO saveUserReview(UserReviewSaveRequest request) {
+
+        checkUserExists(request.userId());
+        checkRestaurantExists(request.restaurantId());
+
+        Rate rate = Rate.fromValue(request.rate());
+        UserReview userReview = UserReviewMapper.INSTANCE.convertToUserReview(request);
+        userReview.setRate(rate);
+        userReview.setReviewDate(LocalDateTime.now());
+        userReview = userReviewEntityService.save(userReview);
+
+        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
+        //restaurantClient.updateAverageRate(userReview.getRestaurantId());
+
+        return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
+    }
+
+    @Override
+    public UserReviewDTO updateUserReview(UserReviewUpdateRequest request) {
+        UserReview userReview = userReviewEntityService.findByIdWithControl(request.id());
+        UserReviewMapper.INSTANCE.updateUserReviewFields(userReview, request);
+
+        userReviewEntityService.save(userReview);
+
+        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
+
+//        restaurantClient.updateAverageRate(userReview.getRestaurantId());
+
+        return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
+    }
+
+    @Override
+    public void deleteUserReview(Long id) {
+        UserReview userReview = userReviewEntityService.findByIdWithControl(id);
+        userReviewEntityService.delete(userReview.getId());
+        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
+        //restaurantClient.updateAverageRate(userReview.getRestaurantId());
+    }
+
     private void checkRestaurantExists(String restaurantId) {
         try {
             restaurantClient.checkRestaurantExists(restaurantId);
@@ -85,6 +114,4 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
             throw new UserNotFoundException(UserErrorMessage.USER_NOT_FOUND);
         }
     }
-
-
 }

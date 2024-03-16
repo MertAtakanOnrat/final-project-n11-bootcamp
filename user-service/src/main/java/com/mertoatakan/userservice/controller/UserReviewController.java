@@ -4,6 +4,7 @@ import com.mertoatakan.userservice.controller.contract.UserReviewControllerContr
 import com.mertoatakan.userservice.dto.UserReviewDTO;
 import com.mertoatakan.userservice.general.RestResponse;
 import com.mertoatakan.userservice.request.UserReviewSaveRequest;
+import com.mertoatakan.userservice.request.UserReviewUpdateRequest;
 import com.mertoatakan.userservice.request.UserSaveRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,15 @@ public class UserReviewController {
     public ResponseEntity<RestResponse<UserReviewDTO>> saveUserReview(@Valid @RequestBody UserReviewSaveRequest request){
         UserReviewDTO userReviewDTO = userReviewControllerContract.saveUserReview(request);
         return ResponseEntity.ok(RestResponse.of(userReviewDTO));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<RestResponse<UserReviewDTO>> updateUserReview(@RequestBody UserReviewUpdateRequest request){
+        UserReviewDTO userReviewDTO = userReviewControllerContract.updateUserReview(request);
+        return ResponseEntity.ok(RestResponse.of(userReviewDTO));
+    }
+    @DeleteMapping("/{id}")
+    public void deleteUserReview(@Valid @PathVariable Long id){
+        userReviewControllerContract.deleteUserReview(id);
     }
 }

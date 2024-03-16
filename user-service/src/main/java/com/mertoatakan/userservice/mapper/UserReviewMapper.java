@@ -6,6 +6,7 @@ import com.mertoatakan.userservice.entity.User;
 import com.mertoatakan.userservice.entity.UserReview;
 import com.mertoatakan.userservice.enums.Rate;
 import com.mertoatakan.userservice.request.UserReviewSaveRequest;
+import com.mertoatakan.userservice.request.UserReviewUpdateRequest;
 import com.mertoatakan.userservice.request.UserSaveRequest;
 import com.mertoatakan.userservice.request.UserUpdateRequest;
 import org.mapstruct.Mapper;
@@ -29,6 +30,9 @@ public interface UserReviewMapper {
     UserReviewDTO convertToUserReviewDTO(UserReview userReview);
 
     List<UserReviewDTO> convertToUserReviewDTOs(List<UserReview> userReviews);
+
+    @Mapping(target = "id", ignore = true)
+    void updateUserReviewFields(@MappingTarget UserReview userReview, UserReviewUpdateRequest request);
 
     default Integer rateToInteger(Rate rate) {
         if (rate == null) {

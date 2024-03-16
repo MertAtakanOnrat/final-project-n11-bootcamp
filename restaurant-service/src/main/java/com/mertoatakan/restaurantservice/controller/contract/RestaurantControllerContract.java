@@ -7,5 +7,6 @@ public interface RestaurantControllerContract {
     Iterable<RestaurantDTO> getAllRestaurants();
     RestaurantDTO getRestaurantById(String id);
     RestaurantDTO saveRestaurant(RestaurantSaveRequest request);
+    Double getAverageRate(String id);
 
 }
