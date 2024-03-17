@@ -63,8 +63,16 @@ This project is designed according to the specifications requested in the assign
 
 ### Adding Screenshots of the Running Application
 
-To include screenshots in your documentation, follow these steps:
 
-![image](https://drive.google.com/uc?export=view&id=<FILE_ID>)
+### User Service UI
+![User Service UI](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.01.01.png "User Service UI Screenshot")
+
+### Restaurant Service UI
+![Restaurant Service UI](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2020.59.39.png "Restaurant Service UI Screenshot")
+
+### Other Screenshots
+![Additional Screenshot 1](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/YourScreenshotFileName.png "Additional Screenshot 1 Description")
+
+![Additional Screenshot 2](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/YourScreenshotFileName.png "Additional Screenshot 2 Description")
 
 
