@@ -15,8 +15,10 @@ public interface RestaurantClient {
     ResponseEntity<RestResponse<RestaurantDTO>> checkRestaurantExists(@PathVariable("id") String id);
 
     @GetMapping("/average-rate/{id}")
-    ResponseEntity<RestResponse<Double>> updateAverageRate(@PathVariable @NotNull String id);
+    ResponseEntity<RestResponse<Double>> getAverageRate(@PathVariable @NotNull String id);
 
+    @GetMapping("/restaurants-near-to-user/{id}")
+    ResponseEntity<RestResponse<Iterable<RestaurantDTO>>> getRestaurantsNear(@PathVariable Long id);
 }
 
 
