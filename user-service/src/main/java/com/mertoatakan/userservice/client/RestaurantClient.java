@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.validation.constraints.NotNull;
 
-@FeignClient(name = "restaurant-service", url = "http://localhost:8081/api/v1/restaurants")
+@FeignClient(name = "restaurant-service", url = "http://restaurant-service:8081/api/v1/restaurants")
 public interface RestaurantClient {
     @GetMapping("/{id}")
     ResponseEntity<RestResponse<RestaurantDTO>> checkRestaurantExists(@PathVariable("id") String id);

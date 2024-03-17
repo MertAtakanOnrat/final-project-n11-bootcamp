@@ -9,3 +9,33 @@ bu şekilde ortalama alıp hesaplanmalı.
 
 yeni bir user-review eklenince silinice ve güncellenince asenkron bir 
 şekilde average hesaplanmalı
+
+docker ile tüm uygulamaları ayağa kaldır
+
+solr kullanarak optimum bir sorgu çalıştır 
+
+önce bunu:
+{
+"add-field-type": {
+"name": "location_restaurant",
+"class": "solr.LatLonPointSpatialField",
+"docValues": "true"
+}
+}
+
+sonra bunu çalıştırdık:
+{
+"add-field": {
+"name": "location",
+"type": "location_restaurant",
+"indexed": true,
+"stored": true
+}
+}
+bunları unutma
+
+
+average rate'i null olanlarda hata fırlıyor onu düzelt
+
+postgre sql bilgilerini application properties kısmında gir user-service ve logger-service için 
+
