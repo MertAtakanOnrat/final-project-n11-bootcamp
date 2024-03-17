@@ -59,6 +59,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
         return UserReviewMapper.INSTANCE.convertToUserReviewDTOs(userReviews);
     }
 
+
     @Override
     public UserReviewDTO saveUserReview(UserReviewSaveRequest request) {
 
@@ -71,8 +72,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
         userReview.setReviewDate(LocalDateTime.now());
         userReview = userReviewEntityService.save(userReview);
 
-        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
-        //restaurantClient.updateAverageRate(userReview.getRestaurantId());
+        restaurantService.getAverageRateAsync(userReview.getRestaurantId());
 
         return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
     }
@@ -84,9 +84,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
 
         userReviewEntityService.save(userReview);
 
-        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
-
-//        restaurantClient.updateAverageRate(userReview.getRestaurantId());
+        restaurantService.getAverageRateAsync(userReview.getRestaurantId());
 
         return UserReviewMapper.INSTANCE.convertToUserReviewDTO(userReview);
     }
@@ -95,8 +93,7 @@ public class UserReviewControllerContractImpl implements UserReviewControllerCon
     public void deleteUserReview(Long id) {
         UserReview userReview = userReviewEntityService.findByIdWithControl(id);
         userReviewEntityService.delete(userReview.getId());
-        restaurantService.updateAverageRateAsync(userReview.getRestaurantId());
-        //restaurantClient.updateAverageRate(userReview.getRestaurantId());
+        restaurantService.getAverageRateAsync(userReview.getRestaurantId());
     }
 
     private void checkRestaurantExists(String restaurantId) {
