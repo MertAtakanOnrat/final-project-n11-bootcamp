@@ -3,9 +3,8 @@ package com.mertoatakan.restaurantservice.mapper;
 import com.mertoatakan.restaurantservice.dto.RestaurantDTO;
 import com.mertoatakan.restaurantservice.entity.Restaurant;
 import com.mertoatakan.restaurantservice.request.RestaurantSaveRequest;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
+import com.mertoatakan.restaurantservice.request.RestaurantUpdateRequest;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 
@@ -16,7 +15,12 @@ public interface RestaurantMapper {
     @Mapping(target = "averageRate", ignore = true)
     Restaurant convertToRestaurant(RestaurantSaveRequest request);
 
-    RestaurantDTO convertToRestaurantDTO(Restaurant customer);
+
+    RestaurantDTO convertToRestaurantDTO(Restaurant restaurant);
 
     Iterable<RestaurantDTO> convertToRestaurantDTOs(Iterable<Restaurant> restaurants);
+
+    @Mapping(target = "id", ignore = true)
+    void updateRestaurantFields(@MappingTarget Restaurant restaurant, RestaurantUpdateRequest request);
+
 }

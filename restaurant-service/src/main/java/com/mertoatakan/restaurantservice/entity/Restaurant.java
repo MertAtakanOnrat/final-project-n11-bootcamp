@@ -38,6 +38,10 @@ public class Restaurant extends BaseEntity {
     @Indexed(name = "longitude", type = "pdouble")
     private Double longitude;
 
+    @Indexed(name = "location_restaurant", type = "location_restaurant")
+    private String location;
+
+
     @NotBlank
     @Indexed(name = "address", type = "string")
     private String address;
@@ -51,16 +55,28 @@ public class Restaurant extends BaseEntity {
     public Restaurant() {
     }
 
-    public Restaurant(String id, String name, String description, Double latitude, Double longitude, String address, Double averageRate) {
+    public Restaurant(String id, String name, String description, Double latitude, Double longitude, String location, String address, Double averageRate) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.location = location;
         this.address = address;
         this.averageRate = averageRate;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(Double latitude, Double longitude) {
+        if (latitude != null && longitude != null) {
+            this.location = latitude + "," + longitude;
+        } else {
+            this.location = null;
+        }
+    }
     public String getId() {
         return id;
     }

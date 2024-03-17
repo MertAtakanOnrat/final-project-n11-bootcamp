@@ -15,6 +15,9 @@ public class RestaurantEntityService extends BaseEntityService<Restaurant, Resta
         super(repository);
     }
 
+    public Iterable<Restaurant> findRestaurantsNear(Double lat, Double lng){
+        return getRepository().findRestaurantsNear(lat, lng);
+    }
     @Override
     public Restaurant findByIdWithControl(String id) {
         Optional<Restaurant> optionalE = getRepository().findById(id);

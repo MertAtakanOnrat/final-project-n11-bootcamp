@@ -4,6 +4,7 @@ import com.mertoatakan.restaurantservice.controller.contract.RestaurantControlle
 import com.mertoatakan.restaurantservice.dto.RestaurantDTO;
 import com.mertoatakan.restaurantservice.general.RestResponse;
 import com.mertoatakan.restaurantservice.request.RestaurantSaveRequest;
+import com.mertoatakan.restaurantservice.request.RestaurantUpdateRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -42,10 +43,23 @@ public class RestaurantController {
         return ResponseEntity.ok(RestResponse.of(restaurantDTO));
     }
 
+    @GetMapping("/restaurants-near-to-user/{id}")
+    public ResponseEntity<RestResponse<Iterable<RestaurantDTO>>> getRestaurantsNear(@PathVariable Long id){
+        Iterable<RestaurantDTO> restaurantsNear = restaurantControllerContract.getRestaurantsNear(id);
+        return ResponseEntity.ok(RestResponse.of(restaurantsNear));
+    }
+
     @PostMapping
     public ResponseEntity<RestResponse<RestaurantDTO>> saveRestaurant(@Valid @RequestBody RestaurantSaveRequest request){
         RestaurantDTO restaurantDTO = restaurantControllerContract.saveRestaurant(request);
         return ResponseEntity.ok(RestResponse.of(restaurantDTO));
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<RestResponse<RestaurantDTO>> updateRestaurant(@RequestBody RestaurantUpdateRequest request){
+        RestaurantDTO restaurantDTO = restaurantControllerContract.updateRestaurant(request);
+        return ResponseEntity.ok(RestResponse.of(restaurantDTO));
+
     }
 
     @DeleteMapping("/{id}")
