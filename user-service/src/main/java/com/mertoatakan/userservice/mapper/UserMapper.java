@@ -1,6 +1,7 @@
 package com.mertoatakan.userservice.mapper;
 
 import com.mertoatakan.userservice.dto.UserDTO;
+import com.mertoatakan.userservice.dto.UserLocationDTO;
 import com.mertoatakan.userservice.entity.User;
 import com.mertoatakan.userservice.request.UserSaveRequest;
 import com.mertoatakan.userservice.request.UserUpdateRequest;
@@ -20,6 +21,8 @@ public interface UserMapper {
     User convertToUser(UserSaveRequest request);
 
     UserDTO convertToUserDTO(User user);
+
+    UserLocationDTO convertToUserLocationDTO(User user);
 
     List<UserDTO> convertToUserDTOs(List<User> users);
 

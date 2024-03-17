@@ -1,7 +1,9 @@
 package com.mertoatakan.userservice.controller;
 
 import com.mertoatakan.userservice.controller.contract.UserControllerContract;
+import com.mertoatakan.userservice.dto.RestaurantDTO;
 import com.mertoatakan.userservice.dto.UserDTO;
+import com.mertoatakan.userservice.dto.UserLocationDTO;
 import com.mertoatakan.userservice.general.RestResponse;
 import com.mertoatakan.userservice.request.UserSaveRequest;
 import com.mertoatakan.userservice.request.UserUpdatePasswordRequest;
@@ -44,6 +46,18 @@ public class UserController {
     public ResponseEntity<RestResponse<UserDTO>> getUserByIdAndName(@RequestParam Long id, @RequestParam String name){
         UserDTO userDTO = userControllerContract.getUserByIdAndName(id, name);
         return ResponseEntity.ok(RestResponse.of(userDTO));
+    }
+
+    @GetMapping("/user-location/{id}")
+    public ResponseEntity<RestResponse<UserLocationDTO>> getUserLocation(@PathVariable Long id){
+        UserLocationDTO userLocation = userControllerContract.getUserLocation(id);
+        return ResponseEntity.ok(RestResponse.of(userLocation));
+    }
+
+    @GetMapping("/recommendation/{id}")
+    public ResponseEntity<RestResponse<List<RestaurantDTO>>> getRecommendation(@PathVariable Long id){
+        List<RestaurantDTO> recommendation = userControllerContract.getRecommendation(id);
+        return ResponseEntity.ok(RestResponse.of(recommendation));
     }
 
     @PostMapping("/{id}")
