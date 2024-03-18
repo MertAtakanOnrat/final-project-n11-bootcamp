@@ -9,13 +9,13 @@ This project is designed according to the specifications requested in the assign
 1. **User Operations:**
     - Users can be registered with name, surname, latitude, and longitude values.
     - User information can be updated, and users can be deleted.
+    - Provides 3 restaurant recommendations considering the user's location and the restaurant's rating.
 
 2. **Review Operations:**
     - Reviews must have a score between 1 and 5.
     - Reviews can be added, updated, and deleted.
 
 3. **Restaurant Recommendation API:**
-    - Provides 3 restaurant recommendations considering the user's location and the restaurant's rating.
     - Restaurants further than 10 km should not be recommended.
     - The proximity has a 30% weight, while the restaurant rating has a 70% weight in the recommendation algorithm.
 
