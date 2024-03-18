@@ -70,7 +70,9 @@ This project is designed according to the specifications requested in the assign
 ![Screenshot 4](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.01.56.png "Screenshot 4 Description")
 ![Screenshot 5](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.02.02.png "Screenshot 5 Description")
 ![Screenshot 6](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.02.12.png "Screenshot 6 Description")
+![Screenshot 7](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-18%20at%2023.59.16.png "Screenshot 7 Description")
 ![Screenshot 7](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.02.46.png "Screenshot 7 Description")
+![Screenshot 8](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.50.21.png "Screenshot 8 Description")
 ![Screenshot 8](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.03.48.png "Screenshot 8 Description")
 
 
