@@ -65,9 +65,6 @@ This project is designed according to the specifications requested in the assign
 ### Adding Screenshots of the Running Application
 
 
-## Application Screenshots
-
-
 ![Screenshot 2](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.01.01.png "Screenshot 2 Description")
 ![Screenshot 3](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.01.48.png "Screenshot 3 Description")
 ![Screenshot 4](https://github.com/MertAtakanOnrat/final-project-n11-bootcamp/blob/main/screenshots/Screenshot%202024-03-17%20at%2023.01.56.png "Screenshot 4 Description")
